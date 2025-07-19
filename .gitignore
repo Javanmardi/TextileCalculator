@@ -20,3 +20,4 @@ build/calculator/localpycs/pyimod02_importers.pyc
 build/calculator/localpycs/pyimod01_archive.pyc
 build/calculator/xref-calculator.html
 build/calculator/warn-calculator.txt
+build.py
