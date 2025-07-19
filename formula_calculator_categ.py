@@ -6,7 +6,7 @@ class CalculatorApp:
     def __init__(self, root):
         self.root = root
         self.root.title("ماشین حساب نساجی")
-        self.root.geometry("1100x500")
+        self.root.geometry("800x300")
         self.root.resizable(True, True)
         
         # Create main notebook for categories
@@ -361,7 +361,7 @@ class CalculatorApp:
         except ValueError:
             messagebox.showerror("Error", "ورودی تعریف نشده! لطفا فقط عدد وارد کنید")
 
-    #create_radiance_tab (PENDING)
+    #create_radiance_tab
     def create_radiance_tab(self):
         category_frame = ttk.Frame(self.main_notebook)
         self.main_notebook.add(category_frame, text="تابندگی")
@@ -438,25 +438,128 @@ class CalculatorApp:
         category_frame = ttk.Frame(self.main_notebook)
         self.main_notebook.add(category_frame, text="بافندگی")
         
+        # Create sub-notebook for this category
         sub_notebook = ttk.Notebook(category_frame)
         sub_notebook.pack(fill='both', expand=True, padx=5, pady=5)
         
-        # Create 4 quality tabs
-        for i in range(4):
-            frame = ttk.Frame(sub_notebook)
-            sub_notebook.add(frame, text=f"بافندگی  Tab {i+1}")
-            self.create_dummy_tab(frame, f"محتوای  بافندگی {i+1}")
+
+        # Create 4 tabs within category
+        frame1 = ttk.Frame(sub_notebook)
+        frame2 = ttk.Frame(sub_notebook)
+        frame3 = ttk.Frame(sub_notebook)
+
+        
+        sub_notebook.add(frame1, text="وزن گرد بر")
+        sub_notebook.add(frame2, text="وزن متر طول")
+        sub_notebook.add(frame3, text="تعداد رشته نخ چله پیچی ")
     
-    def create_dummy_tab(self, parent, content):
-        # Placeholder content for other tabs
-        label = ttk.Label(parent, text=f"این قسمت در حال توسعه است: {content}")
-        label.pack(pady=50)
         
-        entry = ttk.Entry(parent)
-        entry.pack(pady=5)
+        self.create_part13_tab(frame1)
+        self.create_part14_tab(frame2)
+        self.create_part15_tab(frame3)
+   
+    def create_part13_tab(self, parent):
+        ttk.Label(parent, text=" تراکم پود :").grid(row=0, column=0, padx=5, pady=5, sticky='e')
+        self.TPP_entry = ttk.Entry(parent)
+        self.TPP_entry.grid(row=0, column=1, padx=5, pady=5)
         
-        btn = ttk.Button(parent, text="دکمه نمونه", command=lambda: messagebox.showinfo("اطلاع", "این یک تب نمونه است"))
-        btn.pack(pady=5)
+        ttk.Label(parent, text="نمره تار :").grid(row=1, column=0, padx=5, pady=5, sticky='e')
+        self.TNN_entry = ttk.Entry(parent)
+        self.TNN_entry.grid(row=1, column=1, padx=5, pady=5)
+        
+        ttk.Label(parent, text="نمره پود:").grid(row=2, column=0, padx=5, pady=5, sticky='e')
+        self.PNN_entry = ttk.Entry(parent)
+        self.PNN_entry.grid(row=2, column=1, padx=5, pady=5)
+
+        ttk.Label(parent, text=" تراکم تار:").grid(row=3, column=0, padx=5, pady=5, sticky='e')
+        self.TTT_entry = ttk.Entry(parent)
+        self.TTT_entry.grid(row=3, column=1, padx=5, pady=5)
+
+        calc_btn = ttk.Button(parent, text="محاسبه", command=self.calculate_part13)
+        calc_btn.grid(row=4, column=0, columnspan=2, pady=10)
+        
+        self.result13 = ttk.Label(parent, text="نتیجه: ")
+        self.result13.grid(row=5, column=0, columnspan=2)
+    
+    def calculate_part13(self):
+        try:
+            TNN_entry_var = float(self.TNN_entry.get())
+            PNN_entry_var = float(self.PNN_entry.get())
+            TTT_entry_var = float(self.TTT_entry.get())
+            TPP_entry_var = float(self.TPP_entry.get())
+            
+            
+            result = (TPP_entry_var*PNN_entry_var/9000)*(TTT_entry_var*TNN_entry_var/9000)*1.05
+            self.result13.config(text=f"جواب: {result:.2f}")
+        except ValueError:
+            messagebox.showerror("Error", "ورودی تعریف نشده! لطفا فقط عدد وارد کنید")
+
+    def create_part14_tab(self, parent):
+        ttk.Label(parent, text=" عرض:").grid(row=0, column=0, padx=5, pady=5, sticky='e')
+        self.WWV_entry = ttk.Entry(parent)
+        self.WWV_entry.grid(row=0, column=1, padx=5, pady=5)
+        
+        ttk.Label(parent, text="وزن گرد بر").grid(row=1, column=0, padx=5, pady=5, sticky='e')
+        self.WRC_entry = ttk.Entry(parent)
+        self.WRC_entry.grid(row=1, column=1, padx=5, pady=5)
+
+        calc_btn = ttk.Button(parent, text="محاسبه", command=self.calculate_part14)
+        calc_btn.grid(row=2, column=0, columnspan=2, pady=10)
+        
+        self.result14 = ttk.Label(parent, text="نتیجه: ")
+        self.result14.grid(row=3, column=0, columnspan=2)
+    
+    def calculate_part14(self):
+        try:
+            WWV_entry_var = float(self.WWV_entry.get())
+            WRC_entry_var = float(self.WRC_entry.get())
+
+            
+            
+            result = WRC_entry_var*WWV_entry_var
+            self.result14.config(text=f"جواب: {result:.2f}")
+        except ValueError:
+            messagebox.showerror("Error", "ورودی تعریف نشده! لطفا فقط عدد وارد کنید")
+
+    def create_part15_tab(self, parent):
+        ttk.Label(parent, text=" ظرفیت قفسه :").grid(row=0, column=0, padx=5, pady=5, sticky='e')
+        self.SCC_entry = ttk.Entry(parent)
+        self.SCC_entry.grid(row=0, column=1, padx=5, pady=5)
+        
+        ttk.Label(parent, text="تعداد سرنخ کل :").grid(row=1, column=0, padx=5, pady=5, sticky='e')
+        self.TNTN_entry = ttk.Entry(parent)
+        self.TNTN_entry.grid(row=1, column=1, padx=5, pady=5)
+        
+        calc_btn = ttk.Button(parent, text="محاسبه", command=self.calculate_part15)
+        calc_btn.grid(row=2, column=0, columnspan=2, pady=10)
+        
+        self.result15 = ttk.Label(parent, text="نتیجه: ")
+        self.result15.grid(row=3, column=0, columnspan=2)
+    
+    def calculate_part15(self):
+        try:
+            SCC_entry_var = float(self.SCC_entry.get())
+            TNTN_entry_var = float(self.TNTN_entry.get())
+
+            
+
+            result = TNTN_entry_var//((TNTN_entry_var//SCC_entry_var)+1)
+            self.result15.config(text=f"جواب: {result:.2f}")
+        except ValueError:
+            messagebox.showerror("Error", "ورودی تعریف نشده! لطفا فقط عدد وارد کنید")
+
+
+
+    # def create_dummy_tab(self, parent, content):
+    #     # Placeholder content for other tabs
+    #     label = ttk.Label(parent, text=f"این قسمت در حال توسعه است: {content}")
+    #     label.pack(pady=50)
+        
+    #     entry = ttk.Entry(parent)
+    #     entry.pack(pady=5)
+        
+    #     btn = ttk.Button(parent, text="دکمه نمونه", command=lambda: messagebox.showinfo("اطلاع", "این یک تب نمونه است"))
+    #     btn.pack(pady=5)
 
 if __name__ == "__main__":
     root = tk.Tk()
