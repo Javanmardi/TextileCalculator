@@ -4,7 +4,7 @@
 
 > ⚠️ **This repository is archived.**
 > This version is no longer maintained. Please use the web version instead:
-> **[https://calc.parsianik.com/](https://calc.parsianik.com/)** *(replace with your actual Cloudflare Pages URL)*
+> **[https://calc.parsianik.com/](https://calc.parsianik.com/)** 
 
 ---
 
